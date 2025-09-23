@@ -1,1 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Adventures of Cubs Flip Flops</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="header-left">
+      <img src="logo.png" alt="Cubs Flip Flops Logo" class="logo" />
+      <h1>The Adventures of Cubs Flip Flops</h1>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="blogs.html">Blogs</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <main>
+    <section id="featured">
+      <h2>Latest Video</h2>
+      <div id="featured-video"></div>
+    </section>
+
+    <section id="videos">
+      <h2>More of Our Adventures</h2>
+      <div id="video-grid"></div>
+    </section>
+
+    <!-- Latest Blog Section -->
+    <section id="latest-blog">
+      <h2>Latest Blog</h2>
+      <div id="latestBlog"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 The Adventures of Cubs Flip Flops | Family Vlogs & Inclusivity</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Pull latest blog from blogs.html
+    const latestBlogContainer = document.getElementById('latestBlog');
+
+    if (latestBlogContainer) {
+      fetch('blogs.html')
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+          const firstPost = doc.querySelector('.blog-post');
+          if (firstPost) {
+            latestBlogContainer.innerHTML = `
+              <h3>${firstPost.querySelector('h2').textContent}</h3>
+              <p>${firstPost.querySelector('p').innerHTML}</p>
+              <a href="blogs.html">Read more</a>
+            `;
+          }
+        })
+        .catch(err => console.error('Error loading latest blog:', err));
+    }
+  </script>
+</body>
+</html>
