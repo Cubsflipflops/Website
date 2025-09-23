@@ -11,9 +11,9 @@ async function loadVideos() {
     const uploadsPlaylistId =
       playlistData.items[0].contentDetails.relatedPlaylists.uploads;
 
-    // Fetch the latest 12 uploads
+    // Fetch the latest 20 uploads (in case some get skipped)
     const videosRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${uploadsPlaylistId}&maxResults=12&key=${API_KEY}`
+      `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${uploadsPlaylistId}&maxResults=20&key=${API_KEY}`
     );
     const videosData = await videosRes.json();
 
@@ -31,22 +31,25 @@ async function loadVideos() {
     videoGrid.innerHTML = "";
 
     let first = true;
-    detailsData.items.forEach(video => {
+    let smallCount = 0;
+    const maxSmallVideos = 6;
+
+    for (const video of detailsData.items) {
       const videoId = video.id;
       const duration = parseISO8601Duration(video.contentDetails.duration);
 
       // Skip unlisted/private/non-embeddable
       if (!video.status.embeddable || video.status.privacyStatus !== "public") {
-        return;
+        continue;
       }
 
       // Skip Shorts (under 3 mins)
-      if (duration < 180) return;
+      if (duration < 180) continue;
 
       if (first) {
         setFeaturedVideo(videoId, video.snippet.title);
         first = false;
-      } else {
+      } else if (smallCount < maxSmallVideos) {
         const card = document.createElement("div");
         card.classList.add("video-card");
 
@@ -68,8 +71,12 @@ async function loadVideos() {
         card.appendChild(iframe);
         card.appendChild(link);
         videoGrid.appendChild(card);
+
+        smallCount++;
       }
-    });
+
+      if (smallCount >= maxSmallVideos) break; // ✅ stop once we hit 6
+    }
   } catch (err) {
     console.error("Error loading videos", err);
   }
