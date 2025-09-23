@@ -1,4 +1,6 @@
-/* General reset */
+/* ------------------------------
+   GENERAL STYLES
+--------------------------------*/
 body {
   margin: 0;
   font-family: Arial, sans-serif;
@@ -61,6 +63,7 @@ h2 {
   margin-bottom: 10px;
 }
 
+/* Featured video */
 #featured-video {
   display: flex;
   justify-content: center;
@@ -76,6 +79,7 @@ h2 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
+/* Video grid */
 #video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -126,65 +130,11 @@ footer {
   margin-top: 20px;
 }
 
-/* Banner */
-.banner {
-  width: 100%;
-  height: 250px;
-  background: url('https://yt3.googleusercontent.com/zwQbtAE5a6JSIRwUhbord9uiOL0IGSeGyY1vGXiPlX2lW9X-h0iuPVk54GUSGGUAvrXjwtWBlg=w1707-fcrop64=1,00005a57ffffa5a8-k-c0xffffffff-no-nd-rj') center/cover no-repeat;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.banner-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(29, 53, 87, 0.6); /* Semi-transparent blue overlay */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.banner-content {
-  text-align: center;
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
-.banner-content .logo img {
-  height: 60px;
-}
-
-.banner-content h1 {
-  font-size: 2.5rem;
-  font-weight: bold;
-}
-
-.banner-content .adventures {
-  display: flex;
-  gap: 20px;
-  font-size: 1rem;
-  flex-wrap: wrap;
-}
-
-.banner-content .adventures span {
-  background-color: rgba(255, 127, 17, 0.8); /* Orange highlight */
-  padding: 5px 10px;
-  border-radius: 10px;
-  font-weight: bold;
-}
-
 /* ------------------------------
-   MOBILE STYLES
+   MOBILE STYLES (≤768px)
 --------------------------------*/
 @media (max-width: 768px) {
+  /* Header stack */
   header {
     flex-direction: column;
     align-items: flex-start;
@@ -200,16 +150,51 @@ footer {
     margin-top: 10px;
   }
 
+  /* Featured video card */
+  #featured-video {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
   #featured-video iframe {
     width: 100%;
     height: 220px;
+    border-radius: 10px;
   }
 
+  /* Stack small videos vertically */
   #video-grid {
-    grid-template-columns: 1fr; /* stack videos */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .video-card {
+    background: #fff;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .video-card iframe {
+    width: 100%;
     height: 200px;
+    border-radius: 10px;
+  }
+
+  .video-title {
+    font-size: 1rem;
+    margin-top: 8px;
+    text-align: center;
+    color: #1d3557;
   }
 }
