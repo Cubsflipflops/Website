@@ -58,9 +58,21 @@ main {
   margin: 0 auto;
 }
 
+/* Section headings */
 h2 {
   color: #1d3557;
   margin-bottom: 10px;
+}
+
+/* ------------------------------
+   CENTER SECTION TITLES
+--------------------------------*/
+#featured h2,
+#latest-blog h2 {
+  text-align: center;   /* center horizontally */
+  margin: 20px 0;       /* spacing above and below */
+  font-size: 1.5rem;    /* desktop size */
+  color: #1d3557;
 }
 
 /* Featured video */
@@ -119,6 +131,15 @@ h2 {
 
 .video-title:hover {
   color: #ff7f11;
+}
+
+/* Divider image styling */
+.divider {
+  display: block;
+  width: 50%;          /* desktop width */
+  max-width: 400px;
+  height: auto;
+  margin: 30px auto;   /* centers horizontally and adds spacing */
 }
 
 /* Footer */
@@ -196,5 +217,17 @@ footer {
     margin-top: 8px;
     text-align: center;
     color: #1d3557;
+  }
+
+  /* Divider image responsive */
+  .divider {
+    width: 80%;         /* wider on phones */
+    max-width: 300px;
+  }
+
+  /* Section titles responsive */
+  #featured h2,
+  #latest-blog h2 {
+    font-size: 1.2rem;  /* smaller on phones */
   }
 }
