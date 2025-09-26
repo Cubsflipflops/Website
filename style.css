@@ -8,7 +8,7 @@ body {
   color: #333;
 }
 
-/* Header: logo centered, menu below */
+/* Header: logo centered (nav moved outside) */
 header {
   background: #1d3557;
   color: white;
@@ -35,19 +35,25 @@ header h1 {
   text-align: center;
 }
 
-/* Navigation menu stays pill-shaped, centered */
+/* Navigation menu outside the blue box */
+nav {
+  background: #355b90; /* menu has no blue background */
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
 nav ul {
   list-style: none;
   display: flex;
   gap: 15px;
-  margin: 10px 0 0 0;  /* small spacing below logo/title */
+  margin: 0;
   padding: 0;
-  justify-content: center;
-  flex-wrap: wrap;  /* wrap nicely on small screens */
+  flex-wrap: wrap;
 }
 
 nav ul li a {
-  color: white;
+  color: #f9f9f9; /* dark text since outside blue */
   text-decoration: none;
   font-weight: bold;
   padding: 8px 16px;
