@@ -83,6 +83,7 @@ h2 {
    CENTER SECTION TITLES
 --------------------------------*/
 #featured h2,
+#videos h2, 
 #latest-blog h2 {
   text-align: center;
   margin: 20px 0;
@@ -265,3 +266,4 @@ footer {
     max-width: 300px;
   }
 }
+
