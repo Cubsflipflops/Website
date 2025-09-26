@@ -8,48 +8,57 @@ body {
   color: #333;
 }
 
+/* Header: logo centered, menu below */
 header {
   background: #1d3557;
   color: white;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;   /* stack vertically */
+  align-items: center;      /* center horizontally */
   padding: 15px 20px;
 }
 
 .header-left {
   display: flex;
+  flex-direction: column;
   align-items: center;
 }
 
 header .logo {
-  height: 50px;
-  margin-right: 15px;
+  height: 200px;  /* doubled size (from 50px) */
+  margin-bottom: 10px; /* space between logo and title */
 }
 
 header h1 {
   margin: 0;
   font-size: 1.6rem;
+  text-align: center;
 }
 
-/* Navigation menu */
+/* Navigation menu stays pill-shaped, centered */
 nav ul {
   list-style: none;
   display: flex;
-  gap: 20px;
-  margin: 0;
+  gap: 15px;
+  margin: 10px 0 0 0;  /* small spacing below logo/title */
   padding: 0;
+  justify-content: center;
+  flex-wrap: wrap;  /* wrap nicely on small screens */
 }
 
 nav ul li a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  transition: color 0.2s ease;
+  padding: 8px 16px;
+  border-radius: 999px; /* pill shape */
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-nav ul li a:hover {
-  color: #ff7f11;
+nav ul li a:hover,
+nav ul li a.active {
+  background-color: #ff7f11;
+  color: #fff;
 }
 
 main {
@@ -69,16 +78,17 @@ h2 {
 --------------------------------*/
 #featured h2,
 #latest-blog h2 {
-  text-align: center;   /* center horizontally */
-  margin: 20px 0;       /* spacing above and below */
-  font-size: 1.5rem;    /* desktop size */
+  text-align: center;
+  margin: 20px 0;
+  font-size: 1.5rem;
   color: #1d3557;
 }
 
 /* Featured video */
 #featured-video {
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* stack vertically */
+  align-items: center;    /* center horizontally */
   margin-bottom: 20px;
 }
 
@@ -136,10 +146,10 @@ h2 {
 /* Divider image styling */
 .divider {
   display: block;
-  width: 50%;          /* desktop width */
+  width: 50%;
   max-width: 400px;
   height: auto;
-  margin: 30px auto;   /* centers horizontally and adds spacing */
+  margin: 30px auto;
 }
 
 /* Footer */
@@ -171,10 +181,15 @@ footer {
     margin-top: 10px;
   }
 
+  nav ul li a {
+    padding: 10px 18px;
+  }
+
   /* Featured video card */
   #featured-video {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;  /* stack vertically */
+    align-items: center;     /* keep centered */
     width: 100%;
     margin-bottom: 20px;
     background: #fff;
@@ -187,6 +202,25 @@ footer {
     width: 100%;
     height: 220px;
     border-radius: 10px;
+  }
+
+  /* Latest blog card */
+  #latest-blog {
+    background: #fff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    margin-top: 20px;
+  }
+
+  #latest-blog h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  #latestBlog {
+    font-size: 0.95rem;
+    line-height: 1.4;
   }
 
   /* Stack small videos vertically */
@@ -221,13 +255,7 @@ footer {
 
   /* Divider image responsive */
   .divider {
-    width: 80%;         /* wider on phones */
+    width: 80%;
     max-width: 300px;
-  }
-
-  /* Section titles responsive */
-  #featured h2,
-  #latest-blog h2 {
-    font-size: 1.2rem;  /* smaller on phones */
   }
 }
