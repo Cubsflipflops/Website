@@ -11,7 +11,7 @@ async function loadVideos() {
     const uploadsPlaylistId =
       playlistData.items[0].contentDetails.relatedPlaylists.uploads;
 
-    // Fetch the latest 20 uploads (in case some get skipped)
+    // Fetch the latest 20 uploads (extra in case some are skipped)
     const videosRes = await fetch(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${uploadsPlaylistId}&maxResults=20&key=${API_KEY}`
     );
@@ -21,7 +21,7 @@ async function loadVideos() {
       .map(item => item.contentDetails.videoId)
       .join(",");
 
-    // Fetch video details including status & duration
+    // Fetch video details including snippet (title), contentDetails (duration), and status (embed/privacy)
     const detailsRes = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=contentDetails,snippet,status`
     );
@@ -85,8 +85,8 @@ async function loadVideos() {
 function setFeaturedVideo(videoId, title) {
   const featuredDiv = document.getElementById("featured-video");
   featuredDiv.innerHTML = `
-    <iframe src="https://www.youtube.com/embed/${videoId}" 
-      allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
+    <h3 style="margin-top: 10px; color: #1d3557; font-size: 1rem;">${title}</h3>
   `;
 }
 
