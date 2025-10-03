@@ -11,7 +11,7 @@ body {
 /* Header: logo centered (nav moved outside) */
 header {
   position: relative; /* needed for overlay */
-  background: url("images/header.jpg") no-repeat center center; 
+  background: url("header.jpg") no-repeat center center; 
   background-size: cover;
   color: white;
   display: flex;
@@ -338,3 +338,4 @@ footer {
     justify-content: center;
   }
 }
+
