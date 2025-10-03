@@ -1,5 +1,5 @@
-const API_KEY = "AIzaSyDlLhxAuRMWLer0xXTcDsW79VXiOxpAlgk"; // 🔑 replace with your YouTube Data API v3 key
-const CHANNEL_ID = "UCpOIftCTpc8qwDwVZ1vjm9A"; // 🔗 replace with your channel ID
+const API_KEY = "AIzaSyDlLhxAuRMWLer0xXTcDsW79VXiOxpAlgk"; // 🔑 replace if needed
+const CHANNEL_ID = "UCpOIftCTpc8qwDwVZ1vjm9A"; // 🔗 replace if needed
 
 async function loadVideos() {
   try {
@@ -9,23 +9,36 @@ async function loadVideos() {
     );
     const playlistData = await playlistRes.json();
     const uploadsPlaylistId =
-      playlistData.items[0].contentDetails.relatedPlaylists.uploads;
+      playlistData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+    if (!uploadsPlaylistId) throw new Error("Could not get uploads playlist");
 
     // Fetch the latest 20 uploads (extra in case some are skipped)
     const videosRes = await fetch(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${uploadsPlaylistId}&maxResults=20&key=${API_KEY}`
     );
     const videosData = await videosRes.json();
+    const playlistVideoIds = videosData.items
+      .map((item) => item.contentDetails?.videoId)
+      .filter(Boolean);
 
-    const videoIds = videosData.items
-      .map(item => item.contentDetails.videoId)
-      .join(",");
+    if (playlistVideoIds.length === 0) {
+      console.warn("No videos found in playlist");
+      return;
+    }
 
-    // Fetch video details including snippet (title), contentDetails (duration), and status (embed/privacy)
+    // Fetch video details for those ids
     const detailsRes = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${videoIds}&part=contentDetails,snippet,status`
+      `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${playlistVideoIds.join(
+        ","
+      )}&part=contentDetails,snippet,status`
     );
     const detailsData = await detailsRes.json();
+
+    // Build a map so we can preserve playlist order
+    const detailsMap = new Map();
+    for (const v of detailsData.items || []) {
+      detailsMap.set(v.id, v);
+    }
 
     const videoGrid = document.getElementById("video-grid");
     videoGrid.innerHTML = "";
@@ -34,48 +47,32 @@ async function loadVideos() {
     let smallCount = 0;
     const maxSmallVideos = 6;
 
-    for (const video of detailsData.items) {
+    // Iterate in playlist order for predictable results
+    for (const vid of playlistVideoIds) {
+      const video = detailsMap.get(vid);
+      if (!video) continue;
+
       const videoId = video.id;
-      const duration = parseISO8601Duration(video.contentDetails.duration);
+      const duration = parseISO8601Duration(video.contentDetails?.duration);
 
       // Skip unlisted/private/non-embeddable
-      if (!video.status.embeddable || video.status.privacyStatus !== "public") {
+      if (!video.status?.embeddable || video.status?.privacyStatus !== "public") {
         continue;
       }
 
-      // Skip Shorts (under 3 mins)
+      // Skip Shorts (under 3 minutes)
       if (duration < 180) continue;
 
       if (first) {
+        // Set the very first valid video as featured (big)
         setFeaturedVideo(videoId, video.snippet.title);
         first = false;
       } else if (smallCount < maxSmallVideos) {
-        const card = document.createElement("div");
-        card.classList.add("video-card");
-
-        const iframe = document.createElement("iframe");
-        iframe.src = `https://www.youtube.com/embed/${videoId}`;
-        iframe.setAttribute("data-videoid", videoId);
-        iframe.allowFullscreen = true;
-        iframe.addEventListener("click", () => {
-          setFeaturedVideo(videoId, video.snippet.title);
-        });
-
-        const link = document.createElement("a");
-        link.href = `https://www.youtube.com/watch?v=${videoId}`;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
-        link.classList.add("video-title");
-        link.textContent = video.snippet.title;
-
-        card.appendChild(iframe);
-        card.appendChild(link);
-        videoGrid.appendChild(card);
-
+        addSmallVideoThumbnail(videoId, video.snippet.title, videoGrid);
         smallCount++;
       }
 
-      if (smallCount >= maxSmallVideos) break; // ✅ stop once we hit 6
+      if (smallCount >= maxSmallVideos) break;
     }
   } catch (err) {
     console.error("Error loading videos", err);
@@ -84,19 +81,122 @@ async function loadVideos() {
 
 function setFeaturedVideo(videoId, title) {
   const featuredDiv = document.getElementById("featured-video");
+  // autoplay=1 and allow includes autoplay so browsers treat it as user-initiated because click triggered swap
   featuredDiv.innerHTML = `
-    <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
-    <h3 style="margin-top: 10px; color: #1d3557; font-size: 1rem;">${title}</h3>
+    <iframe
+      src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen
+      title="${escapeHtml(title)}"
+    ></iframe>
+    <h3 style="margin-top: 10px; color: #1d3557; font-size: 1rem;">${escapeHtml(
+      title
+    )}</h3>
   `;
+  featuredDiv.setAttribute("data-videoid", videoId);
+  featuredDiv.setAttribute("data-title", title);
 }
 
-// Helper: convert ISO8601 duration to seconds
+function addSmallVideoThumbnail(videoId, title, container) {
+  const card = document.createElement("div");
+  card.classList.add("video-card");
+  card.setAttribute("data-videoid", videoId);
+  card.setAttribute("data-title", title);
+
+  // thumbnail div (16:9)
+  const thumb = document.createElement("div");
+  thumb.classList.add("video-thumb");
+  thumb.style.backgroundImage = `url(https://i.ytimg.com/vi/${videoId}/hqdefault.jpg)`;
+
+  // overlay play button to capture clicks (prevents clicks going into an iframe)
+  const overlay = document.createElement("button");
+  overlay.classList.add("play-overlay");
+  overlay.setAttribute("aria-label", `Play ${title}`);
+  overlay.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    swapWithFeatured(card, videoId, title);
+  });
+
+  thumb.appendChild(overlay);
+
+  const link = document.createElement("a");
+  link.href = `https://www.youtube.com/watch?v=${videoId}`;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.classList.add("video-title");
+  link.textContent = title;
+
+  card.appendChild(thumb);
+  card.appendChild(link);
+  container.appendChild(card);
+}
+
+function swapWithFeatured(card, smallId, smallTitle) {
+  const featuredDiv = document.getElementById("featured-video");
+
+  const currentId = featuredDiv.getAttribute("data-videoid");
+  const currentTitle = featuredDiv.getAttribute("data-title");
+
+  // If there is no current featured, just promote and remove small card
+  if (!currentId) {
+    setFeaturedVideo(smallId, smallTitle);
+    card.remove();
+    return;
+  }
+
+  // Set the clicked small video as featured (this will autoplay)
+  setFeaturedVideo(smallId, smallTitle);
+
+  // Convert the small card into the previous featured video (thumbnail + overlay)
+  card.setAttribute("data-videoid", currentId);
+  card.setAttribute("data-title", currentTitle);
+
+  // Rebuild the small card content (thumbnail + overlay + link)
+  card.innerHTML = "";
+  const thumb = document.createElement("div");
+  thumb.classList.add("video-thumb");
+  thumb.style.backgroundImage = `url(https://i.ytimg.com/vi/${currentId}/hqdefault.jpg)`;
+
+  const overlay = document.createElement("button");
+  overlay.classList.add("play-overlay");
+  overlay.setAttribute("aria-label", `Play ${currentTitle}`);
+  overlay.addEventListener("click", (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    swapWithFeatured(card, currentId, currentTitle);
+  });
+
+  thumb.appendChild(overlay);
+
+  const link = document.createElement("a");
+  link.href = `https://www.youtube.com/watch?v=${currentId}`;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.classList.add("video-title");
+  link.textContent = currentTitle;
+
+  card.appendChild(thumb);
+  card.appendChild(link);
+}
+
+// Helper: convert ISO8601 duration to seconds (safer)
 function parseISO8601Duration(duration) {
+  if (!duration) return 0;
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
-  const hours = parseInt(match[1] || 0, 10);
-  const minutes = parseInt(match[2] || 0, 10);
-  const seconds = parseInt(match[3] || 0, 10);
+  if (!match) return 0;
+  const hours = parseInt(match[1] || "0", 10);
+  const minutes = parseInt(match[2] || "0", 10);
+  const seconds = parseInt(match[3] || "0", 10);
   return hours * 3600 + minutes * 60 + seconds;
+}
+
+function escapeHtml(text) {
+  return String(text)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 loadVideos();
