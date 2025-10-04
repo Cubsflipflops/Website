@@ -10,13 +10,13 @@ body {
 
 /* Header: logo centered (nav moved outside) */
 header {
-  position: relative; /* needed for overlay */
-  background: url("images/header.jpg") no-repeat center center; /* replace with your file */
+  position: relative;
+  background: url("images/header.jpg") no-repeat center center;
   background-size: cover;
   color: white;
   display: flex;
-  flex-direction: column;   /* stack vertically */
-  align-items: center;      /* center horizontally */
+  flex-direction: column;
+  align-items: center;
   padding: 15px 20px;
   z-index: 1;
 }
@@ -25,8 +25,8 @@ header::before {
   content: "";
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(29, 53, 87, 0.8); /* dark overlay */
-  z-index: -1; /* sit behind content */
+  background: rgba(29, 53, 87, 0.8);
+  z-index: -1;
 }
 
 .header-left {
@@ -36,7 +36,7 @@ header::before {
 }
 
 header .logo {
-  height: 200px;  /* doubled size */
+  height: 200px;
   margin-bottom: 10px;
   z-index: 1;
 }
@@ -66,7 +66,7 @@ header h1 {
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 999px; /* pill shape */
+  border-radius: 999px;
   font-weight: bold;
   text-decoration: none;
   color: #fff;
@@ -79,21 +79,10 @@ header h1 {
   box-shadow: 0 4px 10px rgba(0,0,0,0.25);
 }
 
-.social-btn.youtube {
-  background: #ff0000;
-}
-
-.social-btn.tiktok {
-  background: linear-gradient(135deg, #25f4ee, #fe2c55);
-}
-
-.social-btn.instagram {
-  background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
-}
-
-.social-btn.facebook {
-  background: #1877f2;
-}
+.social-btn.youtube { background: #ff0000; }
+.social-btn.tiktok { background: linear-gradient(135deg, #25f4ee, #fe2c55); }
+.social-btn.instagram { background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4); }
+.social-btn.facebook { background: #1877f2; }
 
 /* ------------------------------
    NAVIGATION
@@ -213,54 +202,6 @@ footer {
 }
 
 /* ------------------------------
-   MOBILE STYLES
---------------------------------*/
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: flex-start;
-    background-position: center;
-  }
-
-  header h1 {
-    font-size: 1.2rem;
-  }
-
-  nav ul {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  nav ul li a {
-    padding: 10px 18px;
-  }
-
-  #featured-video iframe {
-    width: 100%;
-    height: 220px;
-    border-radius: 10px;
-  }
-
-  #video-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .video-card iframe {
-    width: 100%;
-    height: 200px;
-    border-radius: 10px;
-  }
-
-  .divider {
-    width: 80%;
-    max-width: 300px;
-  }
-}
-
-/* ------------------------------
    VIDEO THUMBNAIL PLAY BUTTON
 --------------------------------*/
 .video-thumb {
@@ -304,77 +245,8 @@ footer {
   outline: 3px solid rgba(255,0,0,0.6);
 }
 
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  header {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  header .logo {
-    max-width: 120px;
-    margin-bottom: 10px;
-  }
-
-  nav ul {
-    flex-direction: column;
-    padding: 0;
-    text-align: center;
-  }
-
-  nav ul li {
-    display: block;
-    margin: 5px 0;
-  }
-
-  #video-grid {
-    display: grid;
-    grid-template-columns: 1fr; /* one per row on phones */
-    gap: 15px;
-  }
-
-  .social-buttons {
-    justify-content: center;
-  }
-}
-
 /* ------------------------------
-   PHOTO GALLERY
---------------------------------*/
-#gallery {
-  margin: 40px auto;
-  max-width: 1000px;
-}
-
-#gallery h2 {
-  text-align: center;
-  color: #1d3557; /* matches your theme */
-  margin-bottom: 20px;
-}
-
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-  padding: 20px;
-}
-
-#gallery img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-#gallery img:hover {
-  transform: scale(1.05);
-}
-/* ------------------------------
-   GALLERY GRID
+   GALLERY
 --------------------------------*/
 #gallery {
   margin: 40px auto;
@@ -387,8 +259,8 @@ footer {
 
 #gallery img {
   width: 100%;
-  height: 200px;          /* ✅ consistent thumbnail height */
-  object-fit: cover;      /* ✅ crops without distortion */
+  height: 200px;          /* fixed thumbnail height */
+  object-fit: cover;      /* crops without distortion */
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   transition: transform 0.3s;
@@ -399,48 +271,14 @@ footer {
   transform: scale(1.05);
 }
 
-/* ------------------------------
-   LIGHTBOX
---------------------------------*/
-#lightbox {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#lightbox img {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-
-#lightbox .close {
-  position: absolute;
-  top: 20px; right: 40px;
-  color: white;
-  font-size: 3rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* ------------------------------
-   GALLERY SECTION
---------------------------------*/
+/* Gallery wrapper section */
 #gallery-section {
   max-width: 1100px;
   margin: 40px auto;
   padding: 20px;
-  border: 3px solid #1d3557;   /* dark blue border */
+  border: 3px solid #1d3557;
   border-radius: 12px;
-  background: #fff;            /* white background inside */
+  background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   text-align: center;
 }
@@ -457,119 +295,19 @@ footer {
   color: #555;
 }
 
-#gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-#gallery img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;  /* keeps images proportional */
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  transition: transform 0.3s;
-  cursor: pointer;
-}
-
-#gallery img:hover {
-  transform: scale(1.05);
-}
-
-/* ------------------------------
-   LIGHTBOX NAVIGATION
---------------------------------*/
-#lightbox {
-  display: none;
-  position: fixed;
-  z-index: 2000;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-#lightbox img {
-  max-width: 90%;
-  max-height: 80%;
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-}
-
-#lightbox .close {
-  position: absolute;
-  top: 20px; right: 40px;
-  color: white;
-  font-size: 3rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-}
-
-/* Navigation arrows */
-#lightbox .nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  color: white;
-  font-size: 3rem;
-  font-weight: bold;
-  cursor: pointer;
-  user-select: none;
-  padding: 10px;
-  background: rgba(0,0,0,0.3);
-  border-radius: 50%;
-}
-
-#lightbox .prev {
-  left: 20px;
-}
-
-#lightbox .next {
-  right: 20px;
-}
-
-#lightbox .nav:hover,
-#lightbox .close:hover {
-  background: rgba(0,0,0,0.6);
-}
-
-/* Wrapper for each section */
-.gallery-section {
-  margin-bottom: 40px;
-  text-align: center;
-}
-
-/* Section title */
-.gallery-subtitle {
-  margin: 20px 0 15px;
-  font-size: 1.5rem;
-  color: #1d3557;
-}
-
-/* Grid of images under each title */
-.gallery-block {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 15px;
-}
-
-/* Each section becomes a block of rows */
+/* Gallery block */
 .gallery-block {
   display: flex;
-  flex-wrap: wrap;      /* ✅ allows wrapping into new rows */
+  flex-wrap: wrap;
   justify-content: center;
   gap: 15px;
   margin-top: 15px;
 }
 
 .gallery-block img {
-  flex: 0 0 200px;      /* ✅ each image gets a fixed width */
-  height: 150px;        /* keeps them uniform */
-  object-fit: cover;    /* crops nicely without distortion */
+  flex: 0 0 200px;
+  height: 150px;
+  object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   transition: transform 0.3s;
@@ -580,6 +318,9 @@ footer {
   transform: scale(1.05);
 }
 
+/* ------------------------------
+   LIGHTBOX
+--------------------------------*/
 #lightbox {
   display: none;
   position: fixed;
@@ -608,53 +349,36 @@ footer {
   max-width: 80%;
 }
 
-/* ------------------------------
-   BLOG POSTS
---------------------------------*/
-
-/* Card container */
-.blog-post {
-  background: #fff;
-  margin: 20px auto;
-  max-width: 700px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  overflow: hidden; /* ensures header bar stays rounded */
+#lightbox .close {
+  position: absolute;
+  top: 20px; right: 40px;
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  user-select: none;
 }
 
-.blog-post:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+#lightbox .nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  cursor: pointer;
+  user-select: none;
+  padding: 10px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 50%;
 }
 
-/* Header bar (used in cards + popup) */
-.blog-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #e0f0ff;   /* light blue bar */
-  padding: 12px 16px;
-}
+#lightbox .prev { left: 20px; }
+#lightbox .next { right: 20px; }
 
-.blog-title {
-  margin: 0;
-  font-size: 1.4rem;
-  color: #1d3557;       /* dark blue */
-}
-
-.blog-date {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* Blog content (cards + popup body) */
-.blog-content {
-  padding: 20px;
-  font-size: 1.05rem;
-  line-height: 1.6;
-  color: #333;
+#lightbox .nav:hover,
+#lightbox .close:hover {
+  background: rgba(0,0,0,0.6);
 }
 
 /* ------------------------------
@@ -682,20 +406,18 @@ footer {
   align-items: center;
   background: #e0f0ff;
   padding: 12px 16px;
-  border-bottom: 1px solid #c0d8ee; /* thin border */
+  border-bottom: 1px solid #c0d8ee;
 }
 
 .blog-title {
   margin: 0;
   font-size: 1.4rem;
   color: #1d3557;
-  margin-left: 10px;
 }
 
 .blog-date {
   font-size: 0.9rem;
   color: #555;
-  margin-right: 30px;
 }
 
 .blog-content {
@@ -710,10 +432,8 @@ footer {
 --------------------------------*/
 .blog-popup {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
   background: rgba(0,0,0,0.7);
   display: none;
   justify-content: center;
@@ -751,35 +471,53 @@ footer {
   z-index: 20;
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to   { transform: translateY(0); opacity: 1; }
-}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
 /* ------------------------------
-   RESPONSIVE ADJUSTMENTS
+   RESPONSIVE STYLES
 --------------------------------*/
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  #featured-video iframe { width: 90%; height: 350px; }
+}
+
+/* Large phones (≤768px) */
 @media (max-width: 768px) {
-  header { flex-direction: column; align-items: flex-start; background-position: center; }
+  header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  header .logo {
+    max-width: 120px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
   header h1 { font-size: 1.2rem; }
-  nav ul { flex-direction: column; gap: 10px; margin-top: 10px; }
-  nav ul li a { padding: 10px 18px; }
-  #featured-video iframe { width: 100%; height: 220px; border-radius: 10px; }
-  #video-grid { display: flex; flex-direction: column; gap: 20px; }
-  .video-card iframe { width: 100%; height: 200px; border-radius: 10px; }
+
+  nav ul {
+    flex-direction: column;
+    gap: 5px;
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  nav ul li { display: block; width: 100%; }
+  nav ul li a { display: block; width: 100%; background: #1d3557; margin: 2px 0; }
+
+  #featured-video iframe { width: 100%; height: 220px; }
+  #video-grid { grid-template-columns: 1fr; gap: 15px; }
   .divider { width: 80%; max-width: 300px; }
 }
 
-@media (max-width: 600px) {
+/* Small phones (≤480px) */
+@media (max-width: 480px) {
   .blog-title { font-size: 1.2rem; }
   .blog-date { font-size: 0.8rem; }
   .blog-content { font-size: 1rem; padding: 16px; }
   .blog-popup-content { width: 95%; max-height: 85%; }
 }
-
