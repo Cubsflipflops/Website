@@ -391,7 +391,6 @@ footer {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
-  cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
@@ -418,6 +417,7 @@ footer {
 .blog-date {
   font-size: 0.9rem;
   color: #555;
+  margin-right: 10px;
 }
 
 .blog-content {
@@ -425,6 +425,39 @@ footer {
   font-size: 1.05rem;
   line-height: 1.6;
   color: #333;
+}
+
+/* Blog preview clipping */
+.blog-content.preview {
+  max-height: 100px;   /* adjust this for equal preview size */
+  overflow: hidden;
+  position: relative;
+}
+
+.blog-content.preview::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 40px;
+  background: linear-gradient(to bottom, transparent, #fff);
+}
+
+/* Read More button */
+.read-more {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #e0f0ff;
+  color: #1d3557;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 0 0 12px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.read-more:hover {
+  background: #a8d4ff;
 }
 
 /* ------------------------------
@@ -439,6 +472,7 @@ footer {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  margin-right: 35px;
 }
 
 .blog-popup.active {
@@ -521,3 +555,51 @@ footer {
   .blog-content { font-size: 1rem; padding: 16px; }
   .blog-popup-content { width: 95%; max-height: 85%; }
 }
+
+/* Hide menu button on desktops */
+.menu-toggle {
+  display: none;
+  background: #1d3557;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  /* Show the menu button */
+  .menu-toggle {
+    display: block;
+    margin: 10px auto;
+  }
+
+  /* Hide nav links by default */
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #355b90;
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+  }
+
+  .nav-links li {
+    margin: 8px 0;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+  }
+
+  /* Show when active */
+  .nav-links.active {
+    display: flex;
+  }
+}
+
