@@ -453,7 +453,14 @@ footer {
   border-radius: 0 0 12px 12px;
   cursor: pointer;
   transition: background 0.3s ease;
+  text-align: center;      /* centers text inside */
+  text-decoration: none;   /* removes underline if it's a link */
 }
+
+.read-more:hover {
+  background: #a8d4ff;
+}
+
 
 .read-more:hover {
   background: #a8d4ff; /* slightly darker than #e0f0ff */
@@ -629,3 +636,4 @@ footer {
   border-radius: 10px; /* matches your theme’s rounded corners */
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
+
