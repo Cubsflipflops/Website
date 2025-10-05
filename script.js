@@ -1,9 +1,8 @@
-const API_KEY = "AIzaSyDlLhxAuRMWLer0xXTcDsW79VXiOxpAlgk"; // 🔑 replace if needed
-const CHANNEL_ID = "UCpOIftCTpc8qwDwVZ1vjm9A"; // 🔗 replace if needed
+const API_KEY = "AIzaSyDlLhxAuRMWLer0xXTcDsW79VXiOxpAlgk"; 
+const CHANNEL_ID = "UCpOIftCTpc8qwDwVZ1vjm9A"; 
 
 async function loadVideos() {
   try {
-    // Get the Uploads playlist ID for the channel
     const playlistRes = await fetch(
       `https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id=${CHANNEL_ID}&key=${API_KEY}`
     );
@@ -12,7 +11,6 @@ async function loadVideos() {
       playlistData.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
     if (!uploadsPlaylistId) throw new Error("Could not get uploads playlist");
 
-    // Fetch the latest 20 uploads (extra in case some are skipped)
     const videosRes = await fetch(
       `https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&playlistId=${uploadsPlaylistId}&maxResults=20&key=${API_KEY}`
     );
@@ -26,7 +24,6 @@ async function loadVideos() {
       return;
     }
 
-    // Fetch video details for those ids
     const detailsRes = await fetch(
       `https://www.googleapis.com/youtube/v3/videos?key=${API_KEY}&id=${playlistVideoIds.join(
         ","
@@ -34,7 +31,6 @@ async function loadVideos() {
     );
     const detailsData = await detailsRes.json();
 
-    // Build a map so we can preserve playlist order
     const detailsMap = new Map();
     for (const v of detailsData.items || []) {
       detailsMap.set(v.id, v);
@@ -47,7 +43,6 @@ async function loadVideos() {
     let smallCount = 0;
     const maxSmallVideos = 6;
 
-    // Iterate in playlist order for predictable results
     for (const vid of playlistVideoIds) {
       const video = detailsMap.get(vid);
       if (!video) continue;
@@ -55,16 +50,13 @@ async function loadVideos() {
       const videoId = video.id;
       const duration = parseISO8601Duration(video.contentDetails?.duration);
 
-      // Skip unlisted/private/non-embeddable
       if (!video.status?.embeddable || video.status?.privacyStatus !== "public") {
         continue;
       }
 
-      // Skip Shorts (under 3 minutes)
-      if (duration < 180) continue;
+      if (duration < 180) continue; // Skip Shorts
 
       if (first) {
-        // Set the very first valid video as featured (big)
         setFeaturedVideo(videoId, video.snippet.title);
         first = false;
       } else if (smallCount < maxSmallVideos) {
@@ -81,7 +73,6 @@ async function loadVideos() {
 
 function setFeaturedVideo(videoId, title) {
   const featuredDiv = document.getElementById("featured-video");
-  // autoplay=1 and allow includes autoplay so browsers treat it as user-initiated because click triggered swap
   featuredDiv.innerHTML = `
     <iframe
       src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
@@ -103,12 +94,10 @@ function addSmallVideoThumbnail(videoId, title, container) {
   card.setAttribute("data-videoid", videoId);
   card.setAttribute("data-title", title);
 
-  // thumbnail div (16:9)
   const thumb = document.createElement("div");
   thumb.classList.add("video-thumb");
   thumb.style.backgroundImage = `url(https://i.ytimg.com/vi/${videoId}/hqdefault.jpg)`;
 
-  // overlay play button to capture clicks (prevents clicks going into an iframe)
   const overlay = document.createElement("button");
   overlay.classList.add("play-overlay");
   overlay.setAttribute("aria-label", `Play ${title}`);
@@ -138,21 +127,17 @@ function swapWithFeatured(card, smallId, smallTitle) {
   const currentId = featuredDiv.getAttribute("data-videoid");
   const currentTitle = featuredDiv.getAttribute("data-title");
 
-  // If there is no current featured, just promote and remove small card
   if (!currentId) {
     setFeaturedVideo(smallId, smallTitle);
     card.remove();
     return;
   }
 
-  // Set the clicked small video as featured (this will autoplay)
   setFeaturedVideo(smallId, smallTitle);
 
-  // Convert the small card into the previous featured video (thumbnail + overlay)
   card.setAttribute("data-videoid", currentId);
   card.setAttribute("data-title", currentTitle);
 
-  // Rebuild the small card content (thumbnail + overlay + link)
   card.innerHTML = "";
   const thumb = document.createElement("div");
   thumb.classList.add("video-thumb");
@@ -180,7 +165,6 @@ function swapWithFeatured(card, smallId, smallTitle) {
   card.appendChild(link);
 }
 
-// Helper: convert ISO8601 duration to seconds (safer)
 function parseISO8601Duration(duration) {
   if (!duration) return 0;
   const match = duration.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/);
@@ -207,7 +191,7 @@ const navLinks = document.getElementById("nav-links");
 
 if (menuToggle && navLinks) {
   menuToggle.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
+    const isOpen = navLinks.classList.toggle("active");
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
   });
 }
-
