@@ -7,7 +7,6 @@ if (latestBlogContainer) {
   fetch('blogs.html')
     .then(res => res.text())
     .then(html => {
-      // Create a temporary DOM to parse blogs.html
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
       const firstPost = doc.querySelector('.blog-post');
@@ -16,7 +15,6 @@ if (latestBlogContainer) {
         const date = firstPost.querySelector('.blog-date').textContent;
         const content = firstPost.querySelector('.blog-content p').innerHTML;
 
-        // Insert preview into homepage
         latestBlogContainer.innerHTML = `
           <h3>${title}</h3>
           <small>${date}</small>
@@ -41,14 +39,17 @@ if (popup && closeBtn && posts.length > 0) {
   const popupContent = document.getElementById("popup-content");
 
   posts.forEach(post => {
-    post.addEventListener("click", () => {
+    const btn = post.querySelector(".read-more");
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+
       const title = post.querySelector(".blog-title").textContent;
       const date = post.querySelector(".blog-date").textContent;
       const content = post.querySelector(".blog-content").innerHTML;
 
       popupTitle.textContent = title;
       popupDate.textContent = date;
-      popupContent.innerHTML = content; // keep HTML formatting
+      popupContent.innerHTML = content;
 
       popup.classList.add("active");
     });
