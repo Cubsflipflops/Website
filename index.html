@@ -30,14 +30,15 @@
       <a href="https://www.facebook.com/people/The-Adventures-of-Cubs-Flip-Flops/100093204590008/" target="_blank" class="social-btn facebook">
         <i class="fab fa-facebook-f"></i>
       </a>
-
     </div>
-  </header>
+</header>
+
+<!-- Navigation -->
 <nav>
   <!-- Mobile menu button -->
-  <button class="menu-toggle" id="menu-toggle">☰ Menu</button>
+  <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="nav-links">☰ Menu</button>
 
-  <!-- Normal nav for desktops -->
+  <!-- Navigation links -->
   <ul class="nav-links" id="nav-links">
     <li><a href="index.html">Home</a></li>
     <li><a href="accessibility.html">Accessibility Guides</a></li>
@@ -48,8 +49,6 @@
     <li><a href="https://www.youtube.com/@Cubsflipflops">Subscribe</a></li>
   </ul>
 </nav>
-
-
 
   <main>
     <section id="featured">
@@ -90,35 +89,29 @@
     <p>© 2025 The Adventures of Cubs Flip Flops | Family Vlogs & Inclusivity</p>
   </footer>
 
-
   <script src="script.js"></script>
   <script>
-// ------------------------------
-// On homepage (latest blog preview)
-// ------------------------------
-const latestBlogContainer = document.getElementById('latestBlog');
+  // ------------------------------
+  // On homepage (latest blog preview)
+  // ------------------------------
+  const latestBlogContainer = document.getElementById('latestBlog');
 
-if (latestBlogContainer) {
-  fetch('blogs.html')
-    .then(res => res.text())
-    .then(html => {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-      const firstPost = doc.querySelector('.blog-post');
-      if (firstPost) {
-        // Clone the full blog card so it keeps styling
-        const clonedPost = firstPost.cloneNode(true);
-
-        // Remove popup behaviour by stripping cursor pointer + click
-        clonedPost.style.cursor = "default";
-        clonedPost.onclick = null;
-
-        latestBlogContainer.appendChild(clonedPost);
-      }
-    })
-    .catch(err => console.error('Error loading latest blog:', err));
-}
-
+  if (latestBlogContainer) {
+    fetch('blogs.html')
+      .then(res => res.text())
+      .then(html => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const firstPost = doc.querySelector('.blog-post');
+        if (firstPost) {
+          const clonedPost = firstPost.cloneNode(true);
+          clonedPost.style.cursor = "default";
+          clonedPost.onclick = null;
+          latestBlogContainer.appendChild(clonedPost);
+        }
+      })
+      .catch(err => console.error('Error loading latest blog:', err));
+  }
   </script>
 </body>
 </html>
