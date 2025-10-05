@@ -592,5 +592,54 @@ footer {
     display: flex;
   }
 }
+/* === Mobile Menu Overrides === */
+
+/* Hide the hamburger button on desktops */
+.menu-toggle {
+  display: none;
+  background: #1d3557;
+  color: #fff;
+  font-size: 1.2rem;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+  /* Show the menu button */
+  .menu-toggle {
+    display: block;
+    margin: 10px auto;
+  }
+
+  /* Hide nav links by default */
+  nav ul.nav-links {
+    display: none !important;
+    flex-direction: column;
+    background: #355b90;
+    padding: 10px;
+    margin: 0;
+    border-radius: 8px;
+  }
+
+  /* When active (toggled open) */
+  nav ul.nav-links.active {
+    display: flex !important;
+  }
+
+  nav ul.nav-links li {
+    margin: 8px 0;
+  }
+
+  nav ul.nav-links a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+  }
+}
+
 
 
