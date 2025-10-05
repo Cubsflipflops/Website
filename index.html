@@ -91,27 +91,41 @@
 
   <script src="script.js"></script>
   <script>
-  // ------------------------------
-  // On homepage (latest blog preview)
-  // ------------------------------
-  const latestBlogContainer = document.getElementById('latestBlog');
+// ------------------------------
+// On homepage (latest blog preview)
+// ------------------------------
+const latestBlogContainer = document.getElementById('latestBlog');
 
-  if (latestBlogContainer) {
-    fetch('blogs.html')
-      .then(res => res.text())
-      .then(html => {
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(html, 'text/html');
-        const firstPost = doc.querySelector('.blog-post');
-        if (firstPost) {
-          const clonedPost = firstPost.cloneNode(true);
-          clonedPost.style.cursor = "default";
-          clonedPost.onclick = null;
-          latestBlogContainer.appendChild(clonedPost);
-        }
-      })
-      .catch(err => console.error('Error loading latest blog:', err));
-  }
+if (latestBlogContainer) {
+  fetch('blogs.html')
+    .then(res => res.text())
+    .then(html => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const firstPost = doc.querySelector('.blog-post');
+      if (firstPost) {
+        const title = firstPost.querySelector('.blog-title').textContent;
+        const date = firstPost.querySelector('.blog-date').textContent;
+        const content = firstPost.querySelector('.blog-content').innerHTML;
+
+        latestBlogContainer.innerHTML = `
+          <article class="blog-post">
+            <div class="blog-header">
+              <h2 class="blog-title">${title}</h2>
+              <span class="blog-date">${date}</span>
+            </div>
+            <div class="blog-content preview">
+              ${content}
+            </div>
+            <a href="blogs.html" class="read-more">Read more</a>
+          </article>
+        `;
+      }
+    })
+    .catch(err => console.error('Error loading latest blog:', err));
+}
+
   </script>
 </body>
 </html>
+
