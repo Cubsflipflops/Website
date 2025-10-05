@@ -85,7 +85,7 @@ header h1 {
 .social-btn.facebook { background: #1877f2; }
 
 /* ------------------------------
-   NAVIGATION
+   NAVIGATION (desktop baseline)
 --------------------------------*/
 nav {
   background: #355b90;
@@ -295,7 +295,6 @@ footer {
   color: #555;
 }
 
-/* Gallery block */
 .gallery-block {
   display: flex;
   flex-wrap: wrap;
@@ -417,7 +416,7 @@ footer {
 .blog-date {
   font-size: 0.9rem;
   color: #555;
-  margin-right: 10px;
+  margin-right: 10px; /* lets you pull it slightly from the right edge */
 }
 
 .blog-content {
@@ -457,7 +456,7 @@ footer {
 }
 
 .read-more:hover {
-  background: #a8d4ff;
+  background: #a8d4ff; /* slightly darker than #e0f0ff */
 }
 
 /* ------------------------------
@@ -517,7 +516,8 @@ footer {
   #featured-video iframe { width: 90%; height: 350px; }
 }
 
-/* Large phones (≤768px) */
+/* Large phones (≤768px)
+   NOTE: no nav ul rules here to avoid conflicts with hamburger block below */
 @media (max-width: 768px) {
   header {
     flex-direction: column;
@@ -546,55 +546,12 @@ footer {
   .blog-popup-content { width: 95%; max-height: 85%; }
 }
 
-/* Hide menu button on desktops */
-.menu-toggle {
-  display: none;
-  background: #1d3557;
-  color: #fff;
-  font-size: 1.2rem;
-  border: none;
-  padding: 10px 15px;
-  cursor: pointer;
-  border-radius: 6px;
-}
+/* ------------------------------
+   MOBILE HAMBURGER MENU (KEEP AT BOTTOM)
+   This is the only place that controls mobile nav visibility
+--------------------------------*/
 
-/* Mobile styles */
-@media (max-width: 768px) {
-  /* Show the menu button */
-  .menu-toggle {
-    display: block;
-    margin: 10px auto;
-  }
-
-  /* Hide nav links by default */
-  .nav-links {
-    display: none;
-    flex-direction: column;
-    background: #355b90;
-    padding: 10px;
-    margin: 0;
-    border-radius: 8px;
-  }
-
-  .nav-links li {
-    margin: 8px 0;
-  }
-
-  .nav-links a {
-    display: block;
-    padding: 10px;
-    color: #fff;
-    text-align: center;
-  }
-
-  /* Show when active */
-  .nav-links.active {
-    display: flex;
-  }
-}
-/* === Mobile Menu Overrides === */
-
-/* Hide the hamburger button on desktops */
+/* Hide the hamburger button on desktop */
 .menu-toggle {
   display: none;
   background: #1d3557;
@@ -614,7 +571,7 @@ footer {
     margin: 10px auto;
   }
 
-  /* Hide nav links by default */
+  /* Hide nav links by default on mobile */
   nav ul.nav-links {
     display: none !important;
     flex-direction: column;
@@ -622,24 +579,23 @@ footer {
     padding: 10px;
     margin: 0;
     border-radius: 8px;
+    gap: 6px;
   }
 
-  /* When active (toggled open) */
+  /* Show when toggled open */
   nav ul.nav-links.active {
     display: flex !important;
   }
 
   nav ul.nav-links li {
-    margin: 8px 0;
+    margin: 0;
   }
 
   nav ul.nav-links a {
     display: block;
-    padding: 10px;
+    padding: 10px 12px;
     color: #fff;
     text-align: center;
+    border-radius: 999px;
   }
 }
-
-
-
