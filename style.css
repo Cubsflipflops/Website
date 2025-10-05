@@ -599,3 +599,33 @@ footer {
     border-radius: 999px;
   }
 }
+
+#intro-section {
+  background: #fff;            /* white background like a box */
+  border: 2px solid #ddd;      /* subtle border */
+  border-radius: 10px;         /* rounded corners */
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 900px;            /* keeps it centered and neat */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* soft shadow */
+}
+
+#intro-section h2 {
+  margin-top: 0;
+  color: #1d3557;              /* matches your site’s theme */
+}
+
+/* About Us box styling */
+.about-box {
+  max-width: 800px;   /* keeps it same width as blog posts */
+  margin: 30px auto;  /* centers it */
+}
+
+.about-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto 20px; /* centers image, adds spacing below */
+  border-radius: 10px; /* matches your theme’s rounded corners */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
