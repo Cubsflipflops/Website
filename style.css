@@ -453,14 +453,7 @@ footer {
   border-radius: 0 0 12px 12px;
   cursor: pointer;
   transition: background 0.3s ease;
-  text-align: center;      /* centers text inside */
-  text-decoration: none;   /* removes underline if it's a link */
 }
-
-.read-more:hover {
-  background: #a8d4ff;
-}
-
 
 .read-more:hover {
   background: #a8d4ff; /* slightly darker than #e0f0ff */
@@ -637,7 +630,88 @@ footer {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
-#latest-blog .blog-header {
-  padding: 8px 16px; /* smaller blue box only on homepage */
+/* === Contact form styled like blog posts === */
+.contact-container {
+  background: #fff;
+  margin: 20px auto;
+  max-width: 700px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.contact-container:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Header bar same as blogs */
+.contact-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e0f0ff;
+  padding: 12px 16px;
+  border-bottom: 1px solid #c0d8ee;
+}
+
+.contact-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  color: #1d3557;
+}
+
+/* Contact form content area */
+.contact-content {
+  padding: 20px;
+}
+
+.contact-content label {
+  display: block;
+  margin: 10px 0 5px;
+  font-weight: bold;
+  color: #1d3557;
+}
+
+.contact-content input,
+.contact-content textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Submit button styled like Read More */
+.contact-content button {
+  display: block;
+  width: 100%;
+  border: none;
+  background: #e0f0ff;
+  color: #1d3557;
+  font-weight: bold;
+  padding: 12px;
+  border-radius: 0 0 12px 12px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.contact-content button:hover {
+  background: #a8d4ff; /* slightly darker than header */
+}
+
+/* Thank you message */
+.thankyou-msg {
+  display: none;
+  margin: 0;
+  padding: 15px;
+  background: #e0f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+  text-align: center;
+  border-top: 1px solid #c8e6c9;
+  border-radius: 0 0 12px 12px;
+}
