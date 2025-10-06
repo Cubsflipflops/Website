@@ -195,3 +195,29 @@ if (menuToggle && navLinks) {
     menuToggle.setAttribute("aria-expanded", String(isOpen));
   });
 }
+
+// === Contact form handling ===
+const form = document.getElementById("contact-form");
+const thankyou = document.getElementById("thankyou");
+
+if (form) {
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const data = new FormData(form);
+
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (response.ok) {
+      form.style.display = "none";
+      thankyou.style.display = "block";
+    } else {
+      thankyou.textContent = "⚠️ Oops! Something went wrong. Please try again.";
+      thankyou.style.display = "block";
+      thankyou.style.color = "red";
+    }
+  });
+}
