@@ -183,7 +183,10 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;");
 }
 
-loadVideos();
+if (window.location.pathname.endsWith("index.html") || window.location.pathname === "/") {
+    loadVideos();
+}
+
 
 // Mobile menu toggle
 const menuToggle = document.getElementById("menu-toggle");
@@ -221,3 +224,4 @@ if (form) {
     }
   });
 }
+
