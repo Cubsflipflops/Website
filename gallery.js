@@ -2,16 +2,9 @@ const imageFolder = "photos/";
 
 // Each image now has a file + a caption
 const images = [
-  { file: "photo1.jpg", caption: "STITCH!!!!!!!" },
-  { file: "photo2.jpg", caption: "A sunny day at the park" },
-  { file: "photo3.png", caption: "Evening by the seaside" },
-  { file: "photo1.jpg", caption: "STITCH!!!!!!!" },
-  { file: "photo2.jpg", caption: "A sunny day at the park" },
-  { file: "photo3.png", caption: "Evening by the seaside" },
-  { file: "photo1.jpg", caption: "STITCH!!!!!!!" },
-  { file: "photo2.jpg", caption: "A sunny day at the park" },
-  { file: "photo3.png", caption: "Evening by the seaside" },
-  { file: "photo2.jpg", caption: "A sunny day at the park" }
+  { file: "disneycastle.jpg", caption: "A beautiful castle, home of Sleeping Beauty." },
+  { file: "hauntedmanor.jpg", caption: "Phantom Manor" },
+  { file: "bigthundermountain.png", caption: "Big Thunder Mountain" },
 ];
 
 const gallery = document.getElementById("gallery");
@@ -73,3 +66,4 @@ document.addEventListener("keydown", (e) => {
 lightbox.addEventListener("click", (e) => {
   if (e.target === lightbox) closeLightbox();
 });
+
