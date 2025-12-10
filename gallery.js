@@ -4,7 +4,8 @@ const imageFolder = "photos/";
 const images = [
   { file: "disneycastle.jpg", caption: "A beautiful castle, home of Sleeping Beauty." },
   { file: "hauntedmanor.jpg", caption: "Phantom Manor" },
-  { file: "bigthundermountain.png", caption: "Big Thunder Mountain" },
+  { file: "bigthundermountain.jpg", caption: "Big Thunder Mountain" },
+  { file: "tiger.jpg", caption: "Beautiful shot of a tiger." },
 ];
 
 const gallery = document.getElementById("gallery");
@@ -66,4 +67,5 @@ document.addEventListener("keydown", (e) => {
 lightbox.addEventListener("click", (e) => {
   if (e.target === lightbox) closeLightbox();
 });
+
 
